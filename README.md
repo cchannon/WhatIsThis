@@ -46,6 +46,8 @@ The biggest chunk of your time will be in assembling the LCD display, for which 
 
 Take your time, and if you've never done this kind of thing before, make sure you take the time to practice with soldering wire on a basic PCB in advance.
 
+**Seriously, this is the shortest part of the instructions, but the hardest part to get right. TAKE YOUR TIME!
+
 ## Set up your Cognitive Services account
 Not nearly as creepy as the name might suggest, Microsoft Cognitive Services is a set of web APIs that let developers access unbelievable artificial intelligence capabilities with just a few lines of code, including the ability to decipher what a picture is all about. We'll use this web API to figure out what it is you took a picture of, and to amaze your friends!
 
@@ -55,7 +57,7 @@ First, you'll need to create an account and subscribe to the appropriate service
 
 Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") and click "Get Started for Free"
 
-The site will ask you to login with a Live ID (if you don't have one, just sign up) 
+The site will ask you to login with a Live ID (if you don't have one, just sign up; it's free) 
 	
 You'll then have your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
 
@@ -63,7 +65,7 @@ You'll then have your choice of many, many cognitive services APIs to use on a t
 	
 ...If you see that, click *show* to reveal the key, and copy it to a local notepad so you don't lose it
 
-Don't worry - this preview isn't time-dependent (at the time I am writing this); It just limits you to 5000 photos per month for free.
+Don't worry - this preview isn't time-dependent (at the time I am writing this); It just limits you to 5000 photos per month for free (more than anyone should need, right?).
 
 ## a few dependencies...
 To make it all work here you'll need to install a few python dependencies. Follow the instructions on these sites, and you should be good. If you have issues here, let me know and I will update the instructions.
@@ -71,7 +73,7 @@ To make it all work here you'll need to install a few python dependencies. Follo
 * https://learn.adafruit.com/adafruit-16x2-character-lcd-plus-keypad-for-raspberry-pi/usage
 
 ## Let's write some code!
-Grab the Python script from this Github lirary and copy it to your Raspberry Pi. I copied it directly to the \root\pi directory, but really you can put it anywhere you want the file and all its pictures to be saved.
+Grab the Python script from this Github lirary and copy it to your Raspberry Pi. I copied it directly to the /home/pi directory, but really you can put it anywhere you want the file and all its pictures to be saved.
 
 Open the Python script in your Raspberry Pi (it should contain a Python IDE) and edit the _key variable on line 14 to match the API key you got from the Cognitive Services site for yout Computer Vision API.
 
