@@ -51,9 +51,12 @@ First, you'll need to create an account and subscribe to the appropriate service
 
 **I did this part a long time ago, so if I got the details wrong or if they've changed, please correct me, people!**
 
-	1. Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") and click "Get Started for Free"
+	1. Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") 
+		click "Get Started for Free"
 
-	2. The site will ask you to login with a Live ID (if you don't have one, just sign up) then will give you your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
+	2. The site will ask you to login with a Live ID (if you don't have one, just sign up) 
+	
+		> You'll then have your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
 
 		* Key 1: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	
