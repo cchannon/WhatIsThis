@@ -51,17 +51,16 @@ First, you'll need to create an account and subscribe to the appropriate service
 
 **I did this part a long time ago, so if I got the details wrong or if they've changed, please correct me, people!**
 
-	1. Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") 
-		click "Get Started for Free"
+	Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") and click "Get Started for Free"
 
-	2. The site will ask you to login with a Live ID (if you don't have one, just sign up) 
+	The site will ask you to login with a Live ID (if you don't have one, just sign up) 
 	
-		> You'll then have your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
+	You'll then have your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
 
-		* Key 1: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	* Key 1: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	
-	3. If you see that, click *show* to reveal the key, and copy it to a local notepad so you don't lose it
+	 If you see that, click *show* to reveal the key, and copy it to a local notepad so you don't lose it
 	
-	4. Don't worry - this preview isn't time-dependent (at the time I am writing this). It just limits you to 5000 photos per month for free.
+	Don't worry - this preview isn't time-dependent (at the time I am writing this). It just limits you to 5000 photos per month for free.
 
 ## Let's write some code!
