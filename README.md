@@ -32,12 +32,14 @@ There are some basic hardware requriements, and I have listed some links below t
 	
 	> Most Raspberry Pi kits come with a MicroSD card included with an installation of NOOBS (this is a basic program which lets you insall the common RPi operating systems). If yours doesn't, make sure you buy / download one (use a search engine!)
 
-## Install Raspbian Linux
+## Install Raspbian Linux and enable the camera
 If you've never worked with a Raspberry Pi before, the first thing you'll need to do is install the operating system. 
 
 If your MicroSD card came with NOOBS, just connect a monitor, keyboard, mouse and power supply to your Pi and follow the prompts to install Raspbian Linux (yes, it's that easy).
 
 If your MicroSD did not come with NOOBS, [download it!](https://www.raspberrypi.org/downloads/noobs/ "Noobs Download")
+
+Once Linux starts up, set up the camera following the instructions [here](https://www.raspberrypi.org/learning/getting-started-with-picamera/worksheet/ "Raspberry Pi foundation Getting Started with PiCamera")
 
 ## Building it!
 The biggest chunk of your time will be in assembling the LCD display, for which Adafruit provides detailed instructions. (check adafruit for the latest link, but at the time of this posting was [here](https://learn.adafruit.com/adafruit-16x2-character-lcd-plus-keypad-for-raspberry-pi/assembly "16x2 Character lcd plud keypad from adafruit"))
@@ -53,14 +55,44 @@ First, you'll need to create an account and subscribe to the appropriate service
 
 Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") and click "Get Started for Free"
 
-	The site will ask you to login with a Live ID (if you don't have one, just sign up) 
+The site will ask you to login with a Live ID (if you don't have one, just sign up) 
 	
-	You'll then have your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
+You'll then have your choice of many, many cognitive services APIs to use on a trial basis. You're looking for the Computer Vision API. Sign up for that one, and once it lists out your subscriptions, it should show you the key or something that looks like:
 
-	* Key 1: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+* Key 1: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	
-	 If you see that, click *show* to reveal the key, and copy it to a local notepad so you don't lose it
-	
-	Don't worry - this preview isn't time-dependent (at the time I am writing this). It just limits you to 5000 photos per month for free.
+...If you see that, click *show* to reveal the key, and copy it to a local notepad so you don't lose it
+
+Don't worry - this preview isn't time-dependent (at the time I am writing this); It just limits you to 5000 photos per month for free.
+
+## a few dependencies...
+To make it all work here you'll need to install a few python dependencies. Follow the instructions on these sites, and you should be good. If you have issues here, let me know and I will update the instructions.
+* http://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c
+* https://learn.adafruit.com/adafruit-16x2-character-lcd-plus-keypad-for-raspberry-pi/usage
 
 ## Let's write some code!
+Grab the Python script from this Github lirary and copy it to your Raspberry Pi. I copied it directly to the \root\pi directory, but really you can put it anywhere you want the file and all its pictures to be saved.
+
+Open the Python script in your Raspberry Pi (it should contain a Python IDE) and edit the _key variable on line 14 to match the API key you got from the Cognitive Services site for yout Computer Vision API.
+
+You should now be ready to test execute. Run the Python code from your Raspberry Pi (with the entire pi, including camera and LCD assembled) and you should soon see the test prompts to work with the camera. Use the Select button to take pictures and the Left button to scroll back and repeat long text.
+
+If everything works correctly in test, it is time to enable the app to execute on startup. I searched a lot for instructions for this online and found at least 6 ways to do it, but this seemed the easiest and most reliable. If this method doesn't work for you, I recommend checking your linux distribution, and then searching online for other ways to approach the problem.
+
+Launch the Linux Terminal and enter **sudo crontab -e**
+
+This launches a basic text editor window.
+scroll to the bottom of the commented text (below all the # signs) and enter the following text: 
+
+**@reboot sleep 30 ; python /home/pi/ComputerVision.py &**
+
+Or, replace the /home/pi/ComputerVision.py with whatever location you used to save the python file (I mentioned earlier this is where I saved it, this is the only time that matters in this README)
+
+Now press Ctrl + X to Exit the editor, then Y to accept changes and Enter to finish.
+
+## Let's make it happen!
+OK, assuming I missed nothing in the instructions here, you should now be ready to boot up your raspberry pi on any power source--even a battery one--and take some pictures.
+
+If I've missed important steps here, please let me know. Also, I know there are many ways this file can be improved; if you're interested in contributing, just fork it and send me a pull request!
+
+** 
