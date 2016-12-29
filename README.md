@@ -51,7 +51,7 @@ First, you'll need to create an account and subscribe to the appropriate service
 
 **I did this part a long time ago, so if I got the details wrong or if they've changed, please correct me, people!**
 
-	Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") and click "Get Started for Free"
+Go to the Microsoft [Cognitive Services webiste](https://www.microsoft.com/cognitive-services "Microsoft Cognitive Services") and click "Get Started for Free"
 
 	The site will ask you to login with a Live ID (if you don't have one, just sign up) 
 	
