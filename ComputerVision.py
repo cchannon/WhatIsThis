@@ -6,82 +6,12 @@ import requests
 import operator
 import numpy as np
 import json
-import urllib
-import Adafruit_CharLCD as LCD
+import urllib2 
 
-# API parameters
-_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
-_key = '[insert your API key here]'
-_maxNumRetries = 10
-params = {'visualFeatures' : 'Color, Categories, Description'} 
-headers = dict()
-headers['Ocp-Apim-Subscription-Key'] = _key
-headers['Content-Type'] = 'application/octet-stream'
-jsonObj = None
-
-# Initialize the LCD using the pins
-lcd = LCD.Adafruit_CharLCDPlate()
-lcd.set_color(1.0, 1.0, 1.0)
-lcd.clear()
-
-# Let the user know it is getting ready - unnecessary, but fun, and it gives the pi some time to find internet
-for i in range(1,3):
-    for j in range (1,4):
-        lcd.clear()
-        displayMessage = 'Bootup\nin progress.'
-        if j == 2:
-            displayMessage +='.'
-        if j == 3:
-            displayMessage +='..'
-        lcd.message(displayMessage)
-        time.sleep(1.0)
-
-# Loop to search for internet connection
-while True:
-    try:
-        urllib2.urlopen("http://www.bing.com").close()
-    except urllib2.URLError:
-        lcd.clear()
-        lcd.set_color(1.0, 1.0, 0.0)
-        lcd.message("Please wait\nfor internets")
-        time.sleep(1)
-    else:
-        lcd.clear()
-        lcd.message("Connected to\nthe internet!")
-        time.sleep(2)
-        break
-
-# Initialize the camera and set parameters
-camera = picamera.PiCamera()
-camera.hflip = True
-camera.rotation = 90
-lcd.clear()
-lcd.message('Take a picture!')
-while True:
-    # Loop through each button and check if it is pressed.
-    if lcd.is_pressed(LCD.SELECT):
-        # Button is pressed, change the message and backlight.
-        lcd.message('Capturing...')
-        lcd.clear()
-        imageName = 'image' + str(datetime.now()) + '.jpg'
-        camera.capture(imageName)
-        time.sleep(1.0)
-        pathToFileInDisk = r'/home/pi/' +imageName
-        with open(pathToFileInDisk, 'rb') as f:
-            data = f.read()
-        result = processRequest(json, data, headers, params)
-        if result is not None:
-            renderResult(result)
-
-
-## Internal Methods
-# Primary processor - transmit img to API
 def processRequest( json, data, headers, params, lcd ):
-
     lcd.set_color(1.0, 1.0, 0.0)
     lcd.clear()
     lcd.message('Uploading...')
-    
     retries = 0
     result = None
 
@@ -96,21 +26,17 @@ def processRequest( json, data, headers, params, lcd ):
             else: 
                 lcd.message( 'Error: failed after retrying!' )
                 break
-
         elif response.status_code == 200 or response.status_code == 201:
             if 'content-length' in response.headers and int(response.headers['content-length']) == 0: 
-                result = None
-                
+                result = None 
             elif 'content-type' in response.headers and isinstance(response.headers['content-type'], str): 
                 if 'application/json' in response.headers['content-type'].lower(): 
                     result = response.json() if response.content else None 
-
                 elif 'image' in response.headers['content-type'].lower(): 
                     result = response.content
         else:
             lcd.message( "Error code: %d" % ( response.status_code ) )
             lcd.message( "Message: %s" % ( response.json()['message'] ) )
-
         break
     lcd.set_color(0.0, 1.0, 0.0)
     lcd.clear()
@@ -120,7 +46,6 @@ def processRequest( json, data, headers, params, lcd ):
     lcd.set_color(1.0, 1.0, 1.0)
     return result
 
-# print result to LCD
 def renderResult (result, lcd) :
     descriptionText = result['description']['captions'][0]['text']
     if len(descriptionText) <= 16:
@@ -143,3 +68,68 @@ def renderResult (result, lcd) :
                     i = 14
                     break
         i += 1
+
+LCD = None
+import Adafruit_CharLCD as LCD
+
+# API parameters
+_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
+_key = '' # insert your API key here
+_maxNumRetries = 10
+params = {'visualFeatures' : 'Color, Categories, Description'} 
+headers = dict()
+headers['Ocp-Apim-Subscription-Key'] = _key
+headers['Content-Type'] = 'application/octet-stream'
+jsonObj = None
+
+# Initialize the LCD using the pins
+lcd = LCD.Adafruit_CharLCDPlate()
+lcd.set_color(1.0, 1.0, 1.0)
+lcd.clear()
+# This part isn't really necessary, but it's fun and it buys a bit of time to connect to internet
+for i in range(1,3):
+    for j in range (1,4):
+        lcd.clear()
+        displayMessage = 'Bootup\nin progress.'
+        if j == 2:
+            displayMessage +='.'
+        if j == 3:
+            displayMessage +='..'
+        lcd.message(displayMessage)
+        time.sleep(1.0)
+
+## Validate internet connection
+while True:
+    try:
+        urllib2.urlopen("http://www.bing.com").close()
+    except urllib2.URLError:
+        lcd.clear()
+        lcd.set_color(1.0, 1.0, 0.0)
+        lcd.message("Please wait\nfor internets")
+        time.sleep(1)
+    else:
+        lcd.clear()
+        lcd.message("Connected to\nthe internet!")
+        time.sleep(2)
+        break
+
+# Initialize the camera and set parameters
+camera = picamera.PiCamera()
+camera.resolution = (1920, 1080)
+camera.rotation = 90 # you may not need this; depends on how you set up your camera. 
+lcd.clear()
+lcd.message('Take a picture!')
+while True:
+    # Loop through each button and check if it is pressed.
+    if lcd.is_pressed(LCD.SELECT):
+        # Button is pressed, change the message and backlight.
+        lcd.clear()
+        lcd.message('Capturing...')
+        imageName = r'/home/pi/CV/image' + str(datetime.now()) + '.jpg'
+        camera.capture(imageName)
+        time.sleep(2.0)
+        with open(imageName, 'rb') as f:
+            data = f.read()
+        result = processRequest(json, data, headers, params, lcd)
+        if result is not None:
+            renderResult(result, lcd)
