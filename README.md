@@ -86,7 +86,7 @@ Launch the Linux Terminal and enter **sudo crontab -e**
 This launches a basic text editor window.
 scroll to the bottom of the commented text (below all the # signs) and enter the following text: 
 
-**@reboot sleep 30 ; python /home/pi/ComputerVision.py &**
+**@reboot sleep 30 ; sudo python /home/pi/ComputerVision.py &**
 
 Or, replace the /home/pi/ComputerVision.py with whatever location you used to save the python file (I mentioned earlier this is where I saved it, this is the only time that matters in this README)
 
